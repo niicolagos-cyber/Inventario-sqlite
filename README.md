@@ -60,3 +60,31 @@ La base `inventario.db` se crea automáticamente la primera vez.
 - Tests con `pytest` para verificar las reglas de integridad
 - Exportar reportes a CSV
 - Migrar a PostgreSQL con Docker
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+## Versión MySQL
+
+El mismo inventario, implementado en MySQL. Los scripts están en la carpeta `mysql/`.
+
+| Archivo | Qué hace |
+| --- | --- |
+| `01_crear_inventario.sql` | Crea la base `inventario` y las tablas `productos` y `movimientos` |
+| `02_datos_ejemplo.sql` | Carga 5 productos y sus movimientos de ejemplo |
+| `03_valor_inventario.sql` | Valor del stock de cada producto |
+| `04_valor_por_categoria.sql` | Valor total agrupado por categoría (`GROUP BY`) |
+| `05_stock_bajo.sql` | Productos en o por debajo del stock mínimo |
+| `06_mas_vendidos.sql` | Top 3 de productos con más salidas (`JOIN`) |
+| `07_pruebas_integridad.sql` | Inserciones inválidas que deben fallar |
+
+### Cómo usarlo
+
+1. Ejecutar `01_crear_inventario.sql` y después `02_datos_ejemplo.sql`.
+2. Ejecutar cualquiera de las consultas (`03` a `06`).
+
+### Pruebas de integridad
+
+El archivo `07` verifica que la base rechaza datos incorrectos: stock o
+precio negativos, códigos duplicados, movimientos de productos inexistentes,
+cantidades en cero y tipos de movimiento inválidos. Cada sentencia debe
+devolver un error; los conteos de filas se verifican después para
+confirmar que no se guardó ningún dato inválido.
